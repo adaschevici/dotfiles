@@ -75,3 +75,5 @@ function! s:FixWhitespace(line1,line2)
     silent! execute ':' . a:line1 . ',' . a:line2 . 's/\s\+$//'
     call setpos('.', l:save_cursor)
 endfunction
+highlight Search ctermbg=LightBlue ctermfg=white
+vnoremap // y/<C-R>"<CR>
