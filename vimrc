@@ -11,18 +11,23 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'fatih/vim-go'
 Plugin 'jimenezrick/vimerl'
 Plugin 'nvie/vim-flake8'
 Plugin 'rust-lang/rust.vim'
+Plugin 'bling/vim-airline'
+Plugin 'pangloss/vim-javascript'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'mxw/vim-jsx.git'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 set history=700				" Sets how many lines of history VIM has to remember
 
 set nocompatible
-colo delek
+colo jellybeans
 syntax on
 
 set showmode
@@ -46,7 +51,13 @@ set laststatus=2
 set cmdheight=2
 cnoreabbrev W w
 cnoreabbrev Q q
+cnoreabbrev Qa qa
+cnoreabbrev QA qa
+cnoreabbrev qA qa
 cnoreabbrev WQ wq
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev Wq wq
 if exists('loaded_trailing_whitespace_plugin') | finish | endif
 let loaded_trailing_whitespace_plugin = 1
 
@@ -77,3 +88,14 @@ function! s:FixWhitespace(line1,line2)
 endfunction
 highlight Search ctermbg=LightBlue ctermfg=white
 vnoremap // y/<C-R>"<CR>
+let g:go_fmt_command = "goimports"
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_use_quickfix_lists = 0
+let g:jsx_ext_required = 0
