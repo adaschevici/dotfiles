@@ -17,11 +17,15 @@ Plugin 'fatih/vim-go'
 Plugin 'jimenezrick/vimerl'
 Plugin 'nvie/vim-flake8'
 Plugin 'rust-lang/rust.vim'
-Plugin 'bling/vim-airline'
 Plugin 'pangloss/vim-javascript'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'mxw/vim-jsx.git'
-Plugin 'Lokaltog/vim-powerline'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'mhinz/vim-signify'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -94,6 +98,15 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+set ttimeoutlen=50
+let g:airline_theme = 'powerlineish'
+let g:airline#extensions#hunks#enabled=0
+let g:airline#extensions#branch#enabled=1
+
+if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
