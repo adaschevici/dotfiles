@@ -1,7 +1,18 @@
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qa qa
+cnoreabbrev QA qa
+cnoreabbrev qA qa
+cnoreabbrev WQ wq
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev Wq wq
+
+set clipboard+=unnamedplus
+
 if &compatible
   set nocompatible               " Be iMproved
 endif
-
 " Required:
 set runtimepath^=/Users/zero/.config/nvim/dein//repos/github.com/Shougo/dein.vim
 
@@ -36,6 +47,9 @@ call dein#add('airblade/vim-gitgutter')
 call dein#add('tpope/vim-fugitive')
 call dein#add('mhinz/vim-signify')
 call dein#add('Shougo/deoplete.nvim')
+call dein#add('chrisbra/csv.vim')
+call dein#add('tshirtman/vim-cython')
+call dein#add('elixir-lang/vim-elixir')
 
 
 " Required:
@@ -50,7 +64,7 @@ filetype plugin indent on
 "endif
 
 " set nocompatible              " be iMproved, required
-" set number
+set number
 " filetype off                  " required
 " 
 " " set the runtime path to include Vundle and initialize
@@ -105,15 +119,6 @@ set backupdir=~/vim/tmp/
 set nowrap
 set laststatus=2
 set cmdheight=2
-cnoreabbrev W w
-cnoreabbrev Q q
-cnoreabbrev Qa qa
-cnoreabbrev QA qa
-cnoreabbrev qA qa
-cnoreabbrev WQ wq
-cnoreabbrev wQ wq
-cnoreabbrev WQ wq
-cnoreabbrev Wq wq
 if exists('loaded_trailing_whitespace_plugin') | finish | endif
 let loaded_trailing_whitespace_plugin = 1
 
@@ -173,9 +178,55 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_use_quickfix_lists = 0
 let g:jsx_ext_required = 0
 " Deoplete using yay
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 au FileType python setl sw=4 sts=4 et
 au FileType css setl sw=2 sts=2 et
 au FileType js setl sw=2 sts=2 et
 au FileType go setl sw=4 sts=4 et
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = ' -std=c++14 -stdlib=libc++'
+autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
+let g:syntastic_javascript_checkers = ['eslint']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+let g:syntastic_javascript_standard_args = "--global $ --global it --global describe"
+let g:syntastic_version = '3.4.0-107'
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+nnoremap \ :Ag<SPACE>
