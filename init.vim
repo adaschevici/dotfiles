@@ -9,6 +9,7 @@ cnoreabbrev WQ wq
 cnoreabbrev Wq wq
 
 set clipboard+=unnamedplus
+set wrap
 
 if &compatible
   set nocompatible               " Be iMproved
@@ -28,7 +29,7 @@ call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
 
 " You can specify revision/branch/tag.
-call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+
 
 call dein#add('scrooloose/nerdtree')
 call dein#add('scrooloose/syntastic')
