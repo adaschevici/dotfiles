@@ -7,9 +7,12 @@ cnoreabbrev WQ wq
 cnoreabbrev wQ wq
 cnoreabbrev WQ wq
 cnoreabbrev Wq wq
+cnoreabbrev WQ wq
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev Wqa wqa
 
 set clipboard+=unnamedplus
-set wrap
 
 if &compatible
   set nocompatible               " Be iMproved
@@ -29,7 +32,7 @@ call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
 
 " You can specify revision/branch/tag.
-
+" call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
 
 call dein#add('scrooloose/nerdtree')
 call dein#add('scrooloose/syntastic')
@@ -47,11 +50,16 @@ call dein#add('vim-airline/vim-airline-themes')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('tpope/vim-fugitive')
 call dein#add('mhinz/vim-signify')
-call dein#add('Shougo/deoplete.nvim')
 call dein#add('chrisbra/csv.vim')
-call dein#add('tshirtman/vim-cython')
-call dein#add('elixir-lang/vim-elixir')
-
+call dein#add('tpope/vim-unimpaired')
+call dein#add('Shougo/deoplete.nvim')
+call dein#add('SirVer/ultisnips')
+call dein#add('honza/vim-snippets')
+call dein#add('AndrewRadev/linediff.vim')
+call dein#add('leafgarland/typescript-vim')
+call dein#add('junegunn/fzf.vim')
+call dein#add('racer-rust/vim-racer')
+call dein#add('terryma/vim-multiple-cursors')
 
 " Required:
 call dein#end()
@@ -64,16 +72,33 @@ filetype plugin indent on
 "  call dein#install()
 "endif
 
+" fugitive git bindings
+nnoremap <space>ga :Git add %:p<CR><CR>
+nnoremap <space>gs :Gstatus<CR>
+nnoremap <space>gc :Gcommit -v -q<CR>
+nnoremap <space>gt :Gcommit -v -q %:p<CR>
+nnoremap <space>gd :Gdiff<CR>
+nnoremap <space>ge :Gedit<CR>
+nnoremap <space>gr :Gread<CR>
+nnoremap <space>gw :Gwrite<CR><CR>
+nnoremap <space>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <space>gp :Ggrep<Space>
+nnoremap <space>gm :Gmove<Space>
+nnoremap <space>gb :Git branch<Space>
+nnoremap <space>go :Git checkout<Space>
+nnoremap <space>gps :Dispatch! git push<CR>
+nnoremap <space>gpl :Dispatch! git pull<CR>
+
 " set nocompatible              " be iMproved, required
 set number
 " filetype off                  " required
-" 
+"
 " " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim
 " call vundle#begin()
 " " alternatively, pass a path where Vundle should install plugins
 " "call vundle#begin('~/some/path/here')
-" 
+"
 " " let Vundle manage Vundle, required
 " Plugin 'gmarik/Vundle.vim'
 " Plugin 'scrooloose/nerdtree'
@@ -173,7 +198,7 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_use_quickfix_lists = 0
@@ -183,12 +208,17 @@ let g:jsx_ext_required = 0
 
 au FileType python setl sw=4 sts=4 et
 au FileType css setl sw=2 sts=2 et
+au FileType scss setl sw=2 sts=2 et
 au FileType js setl sw=2 sts=2 et
+au FileType ts setl sw=2 sts=2 et
 au FileType go setl sw=4 sts=4 et
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++14 -stdlib=libc++'
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
-let g:syntastic_javascript_checkers = ['eslint']
+autocmd Filetype typescript setlocal ts=2 sw=2 expandtab
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
+let g:neomake_javascript_enabled_makers = ['./node_modules/eslint/bin/eslint.js']
+let g:syntastic_javascript_checkers = ['./node_modules/eslint/bin/eslint.js']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -198,19 +228,19 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_checkers = ['./node_modules/eslint/bin/eslint.js']
+" let g:syntastic_javascript_eslint_exe = '/Users/artur-iuliandaschevici/.nvm/versions/node/v8.4.0/bin/eslint'
+let g:syntastic_javascript_eslint_exe = 'npm run lint -- %f'
 
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
+" let g:syntastic_error_symbol = '❌'
+" let g:syntastic_style_error_symbol = '⁉️'
+" let g:syntastic_warning_symbol = '!!'
+" let g:syntastic_style_warning_symbol = '💩'
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
-let g:syntastic_javascript_standard_args = "--global $ --global it --global describe"
-let g:syntastic_version = '3.4.0-107'
 
 " The Silver Searcher
 if executable('ag')
@@ -224,10 +254,59 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-" bind K to grep word under cursor
-nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind \ (backward slash) to grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-
 nnoremap \ :Ag<SPACE>
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#ignore_sources = {}
+let g:deoplete#ignore_sources._ = ["neosnippet"]
+" I want to use my tab more smarter. If we are inside a completion menu jump
+" to the next item. Otherwise check if there is any snippet to expand, if yes
+" expand it. Also if inside a snippet and we need to jump tab jumps. If none
+" of the above matches we just call our usual 'tab'.
+function! s:neosnippet_complete()
+  if pumvisible()
+    return "\<c-n>"
+  else
+    if neosnippet#expandable_or_jumpable()
+      return "\<Plug>(neosnippet_expand_or_jump)"
+    endif
+    return "\<tab>"
+  endif
+endfunction
+
+imap <expr><TAB> <SID>neosnippet_complete()
+
+set rtp+=~/.config/nvim/dein/ultisnips/
+set rtp+=~/.config/nvim/dein/deoplete.nvim/
+set rtp+=~/.config/nvim/mysnips/
+
+" let g:deoplete#enable_at_startup = 1
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/mysnips', 'mysnips']
+
+inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
+" inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<tab>"
+let g:typescript_indent_disable = 1
+let g:syntastic_go_checkers = ['go']
+
+nmap ]c <Plug>GitGutterNextHunk
+nmap [c <Plug>GitGutterPrevHunk
+nmap <Leader>hs <Plug>GitGutterStageHunk
+nmap <Leader>hu <Plug>GitGutterUndoHunk
+" Convert slashes to backslashes for Windows.
+if has('win32')
+  nmap ,cs :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+  nmap ,cl :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
+
+  " This will copy the path in 8.3 short format, for DOS and Windows 9x
+  nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
+else
+  nmap ,cs :let @*=expand("%")<CR>
+  nmap ,cl :let @*=expand("%:p")<CR>
+endif
