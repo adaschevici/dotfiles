@@ -60,6 +60,9 @@ call dein#add('leafgarland/typescript-vim')
 call dein#add('junegunn/fzf.vim')
 call dein#add('racer-rust/vim-racer')
 call dein#add('terryma/vim-multiple-cursors')
+call dein#add('mattn/emmet-vim')
+call dein#add('w0rp/ale')
+call dein#add('dag/vim-fish')
 
 " Required:
 call dein#end()
@@ -123,7 +126,8 @@ set number
 set history=700                " Sets how many lines of history VIM has to remember
 
 set nocompatible
-colo jellybeans
+set background=dark
+colo solarized
 syntax on
 
 set showmode
@@ -217,8 +221,7 @@ let g:syntastic_cpp_compiler_options = ' -std=c++14 -stdlib=libc++'
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype typescript setlocal ts=2 sw=2 expandtab
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
-let g:neomake_javascript_enabled_makers = ['./node_modules/eslint/bin/eslint.js']
-let g:syntastic_javascript_checkers = ['./node_modules/eslint/bin/eslint.js']
+" let g:neomake_javascript_enabled_makers = ['./node_modules/.bin/eslint']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -228,14 +231,22 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['./node_modules/eslint/bin/eslint.js']
 " let g:syntastic_javascript_eslint_exe = '/Users/artur-iuliandaschevici/.nvm/versions/node/v8.4.0/bin/eslint'
-let g:syntastic_javascript_eslint_exe = 'npm run lint -- %f'
+" let g:syntastic_javascript_checkers = ['npx eslint %']
+" let g:syntastic_javascript_eslint_exe = 'npx eslint %'
 
 " let g:syntastic_error_symbol = '❌'
 " let g:syntastic_style_error_symbol = '⁉️'
 " let g:syntastic_warning_symbol = '!!'
 " let g:syntastic_style_warning_symbol = '💩'
+
+" let g:ale_sign_error = '❌'
+" let g:ale_sign_warning = '💩'
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'js': ['eslint'],
+\   'jsx': ['eslint']
+\}
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
