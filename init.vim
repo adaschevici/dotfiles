@@ -12,30 +12,29 @@ cnoreabbrev wQ wq
 cnoreabbrev WQ wq
 cnoreabbrev Wqa wqa
 
-set noeol
 set clipboard+=unnamedplus
-"dein Scripts-----------------------------
+
 if &compatible
   set nocompatible               " Be iMproved
 endif
-
 " Required:
-set runtimepath+=/Users/adaschevici/.config/nvim/dein/repos/github.com/Shougo/dein.vim
+set runtimepath^=/Users/zero/.config/nvim/dein//repos/github.com/Shougo/dein.vim
+set tags+=tags;$HOME
 
-let g:python_host_prog='~/pythons/py2/bin/python'
-" let g:python3_host_prog='~/pythons/py3/bin/python'
-
-" Required:
-if dein#load_state('/Users/adaschevici/.config/nvim/dein')
-  call dein#begin('/Users/adaschevici/.config/nvim/dein')
+if dein#load_state('/Users/zero/.config/nvim/dein')
+  " Required:
+  call dein#begin(expand('/Users/zero/.config/nvim/dein/'))
 
   " Let dein manage dein
   " Required:
-  call dein#add('/Users/adaschevici/.config/nvim/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('Shougo/dein.vim')
 
   " Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
+
+  " You can specify revision/branch/tag.
+  " call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
 
   call dein#add('scrooloose/nerdtree')
   call dein#add('scrooloose/syntastic')
@@ -66,6 +65,7 @@ if dein#load_state('/Users/adaschevici/.config/nvim/dein')
   call dein#add('mattn/emmet-vim')
   call dein#add('w0rp/ale')
   call dein#add('dag/vim-fish')
+  call dein#add('ryanoasis/vim-devicons')
 
   " Required:
   call dein#end()
@@ -74,14 +74,8 @@ endif
 
 " Required:
 filetype plugin indent on
-syntax enable
 
-" If you want to install not installed plugins on startup.
-"if dein#check_install()
-"  call dein#install()
-"endif
-
-"End dein Scripts-------------------------
+set encoding=UTF-8
 " If you want to install not installed plugins on startup.
 "if dein#check_install()
 "  call dein#install()
@@ -105,7 +99,45 @@ nnoremap <space>gps :Dispatch! git push<CR>
 nnoremap <space>gpl :Dispatch! git pull<CR>
 
 " set nocompatible              " be iMproved, required
-set relativenumber
+" set number relativenumber
+" set nonumber norelativenumber
+" set number! norelativenumber!
+set number relativenumber
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
+" filetype off                  " required
+"
+" " set the runtime path to include Vundle and initialize
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+" " alternatively, pass a path where Vundle should install plugins
+" "call vundle#begin('~/some/path/here')
+"
+" " let Vundle manage Vundle, required
+" Plugin 'gmarik/Vundle.vim'
+" Plugin 'scrooloose/nerdtree'
+" Plugin 'scrooloose/syntastic'
+" Plugin 'kien/ctrlp.vim'
+" Plugin 'fatih/vim-go'
+" Plugin 'jimenezrick/vimerl'
+" Plugin 'nvie/vim-flake8'
+" Plugin 'rust-lang/rust.vim'
+" Plugin 'pangloss/vim-javascript'
+" Plugin 'maksimr/vim-jsbeautify'
+" Plugin 'mxw/vim-jsx.git'
+" Plugin 'derekwyatt/vim-scala'
+" Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'airblade/vim-gitgutter'
+" Plugin 'tpope/vim-fugitive'
+" Plugin 'mhinz/vim-signify'
+" call vundle#end()            " required
+" filetype plugin indent on    " required
 
 set history=700                " Sets how many lines of history VIM has to remember
 
@@ -128,6 +160,8 @@ set ruler
 set ignorecase
 set smartcase
 set hlsearch
+set backup
+set backupdir=~/vim/tmp/
 set nowrap
 set laststatus=2
 set cmdheight=2
@@ -165,7 +199,6 @@ let g:go_fmt_command = "goimports"
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
@@ -204,33 +237,37 @@ let g:syntastic_cpp_compiler_options = ' -std=c++14 -stdlib=libc++'
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype typescript setlocal ts=2 sw=2 expandtab
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
-let g:neomake_javascript_enabled_makers = ['./node_modules/eslint/bin/eslint.js']
-let g:syntastic_javascript_checkers = ['./node_modules/eslint/bin/eslint.js']
+" let g:neomake_javascript_enabled_makers = ['./node_modules/.bin/eslint']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_loc_list_height = 5
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['./node_modules/eslint/bin/eslint.js']
 " let g:syntastic_javascript_eslint_exe = '/Users/artur-iuliandaschevici/.nvm/versions/node/v8.4.0/bin/eslint'
-let g:syntastic_javascript_eslint_exe = 'npm run lint -- %f'
+" let g:syntastic_javascript_checkers = ['npx eslint %']
+" let g:syntastic_javascript_eslint_exe = 'npx eslint %'
 
 " let g:syntastic_error_symbol = '❌'
 " let g:syntastic_style_error_symbol = '⁉️'
 " let g:syntastic_warning_symbol = '!!'
 " let g:syntastic_style_warning_symbol = '💩'
 
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '💩'
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'js': ['eslint'],
+\   'jsx': ['eslint']
+\}
+
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
-
-let g:ale_linters = {
-\      'javascript': ['eslint'],
-\      'js': ['eslint'],
-\      'jsx': ['eslint']
-\}
 
 " The Silver Searcher
 if executable('ag')
@@ -300,8 +337,3 @@ else
   nmap ,cs :let @*=expand("%")<CR>
   nmap ,cl :let @*=expand("%:p")<CR>
 endif
-" If you want to install not installed plugins on startup.
-"if dein#check_install()
-"  call dein#install()
-"endif
-"End dein Scripts-------------------------
