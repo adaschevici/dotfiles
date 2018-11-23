@@ -1,38 +1,155 @@
-set nocompatible              " be iMproved, required
-set number
-filetype off                  " required
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qa qa
+cnoreabbrev QA qa
+cnoreabbrev qA qa
+cnoreabbrev WQ wq
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev Wq wq
+cnoreabbrev WQ wq
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev Wqa wqa
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+set noeol
+set tags+=tags;$HOME
+set clipboard=unnamed
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'kien/ctrlp.vim'
-Plugin 'fatih/vim-go'
-Plugin 'jimenezrick/vimerl'
-Plugin 'nvie/vim-flake8'
-Plugin 'rust-lang/rust.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'maksimr/vim-jsbeautify'
-Plugin 'mxw/vim-jsx.git'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'mhinz/vim-signify'
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Autoclosing custom
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ` ``<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+inoremap (<CR> (<CR>)<ESC>O
+inoremap (;<CR> (<CR>);<ESC>O
+inoremap [<CR> [<CR>]<ESC>O
+inoremap [;<CR> [<CR>];<ESC>O
 
-set history=700				" Sets how many lines of history VIM has to remember
+" Required:
+set runtimepath+=/Users/adaschevici/.config/nvim/dein/repos/github.com/Shougo/dein.vim
+
+let g:python_host_prog='~/pythons/py2/bin/python'
+" let g:python3_host_prog='~/pythons/py3/bin/python'
+
+" Required:
+if dein#load_state('/Users/adaschevici/.config/nvim/dein')
+  call dein#begin('/Users/adaschevici/.config/nvim/dein')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Users/adaschevici/.config/nvim/dein/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('scrooloose/syntastic')
+  call dein#add('kien/ctrlp.vim')
+  call dein#add('fatih/vim-go')
+  call dein#add('jimenezrick/vimerl')
+  call dein#add('nvie/vim-flake8')
+  call dein#add('rust-lang/rust.vim')
+  call dein#add('pangloss/vim-javascript')
+  call dein#add('maksimr/vim-jsbeautify')
+  call dein#add('mxw/vim-jsx.git')
+  call dein#add('derekwyatt/vim-scala')
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('airblade/vim-gitgutter')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('mhinz/vim-signify')
+  call dein#add('chrisbra/csv.vim')
+  call dein#add('tpope/vim-unimpaired')
+  call dein#add('SirVer/ultisnips')
+  call dein#add('honza/vim-snippets')
+  call dein#add('AndrewRadev/linediff.vim')
+  call dein#add('leafgarland/typescript-vim')
+  call dein#add('junegunn/fzf.vim')
+  call dein#add('racer-rust/vim-racer')
+  call dein#add('terryma/vim-multiple-cursors')
+  call dein#add('mattn/emmet-vim')
+  call dein#add('w0rp/ale')
+  call dein#add('dag/vim-fish')
+  call dein#add('Xuyuanp/nerdtree-git-plugin')
+  call dein#add('jasonshell/vim-svg-indent')
+  call dein#add('epilande/vim-react-snippets')
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" "call plug#begin('~/.vim/plugged')
+" "
+" "Plug 'SirVer/ultisnips'
+" "Plug 'epilande/vim-es2015-snippets'
+" "Plug 'epilande/vim-react-snippets'
+" "
+" "call plug#end()
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+
+"End dein Scripts-------------------------
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+
+" fugitive git bindings
+nnoremap <space>ga :Git add %:p<CR><CR>
+nnoremap <space>gs :Gstatus<CR>
+nnoremap <space>gc :Gcommit -v -q<CR>
+nnoremap <space>gt :Gcommit -v -q %:p<CR>
+nnoremap <space>gd :Gdiff<CR>
+nnoremap <space>ge :Gedit<CR>
+nnoremap <space>gr :Gread<CR>
+nnoremap <space>gw :Gwrite<CR><CR>
+nnoremap <space>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <space>gp :Ggrep<Space>
+nnoremap <space>gm :Gmove<Space>
+nnoremap <space>gb :Git branch<Space>
+nnoremap <space>go :Git checkout<Space>
+nnoremap <space>gps :Dispatch! git push<CR>
+nnoremap <space>gpl :Dispatch! git pull<CR>
+
+" set nocompatible              " be iMproved, required
+set number relativenumber
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
+set history=700                " Sets how many lines of history VIM has to remember
 
 set nocompatible
-colo jellybeans
+set background=dark
+colo solarized
 syntax on
 
 set showmode
@@ -49,20 +166,9 @@ set ruler
 set ignorecase
 set smartcase
 set hlsearch
-set backup
-set backupdir=~/vim/tmp/
 set nowrap
 set laststatus=2
 set cmdheight=2
-cnoreabbrev W w
-cnoreabbrev Q q
-cnoreabbrev Qa qa
-cnoreabbrev QA qa
-cnoreabbrev qA qa
-cnoreabbrev WQ wq
-cnoreabbrev wQ wq
-cnoreabbrev WQ wq
-cnoreabbrev Wq wq
 if exists('loaded_trailing_whitespace_plugin') | finish | endif
 let loaded_trailing_whitespace_plugin = 1
 
@@ -98,6 +204,15 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+" let g:go_fmt_fail_silently = 1
+
 set ttimeoutlen=50
 let g:airline_theme = 'powerlineish'
 let g:airline#extensions#hunks#enabled=0
@@ -108,8 +223,131 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_use_quickfix_lists = 0
 let g:jsx_ext_required = 0
+" Deoplete using yay
+" let g:deoplete#enable_at_startup = 1
+
+au FileType python setl sw=4 sts=4 et
+au FileType css setl sw=2 sts=2 et
+au FileType scss setl sw=2 sts=2 et
+au FileType js setl sw=2 sts=2 et
+au FileType ts setl sw=2 sts=2 et
+au FileType go setl sw=4 sts=4 et
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = ' -std=c++14 -stdlib=libc++'
+autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
+autocmd Filetype typescript setlocal ts=2 sw=2 expandtab
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
+let g:neomake_javascript_enabled_makers = ['./node_modules/eslint/bin/eslint.js']
+let g:syntastic_javascript_checkers = ['./node_modules/eslint/bin/eslint.js']
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers = ['./node_modules/eslint/bin/eslint.js']
+" let g:syntastic_javascript_eslint_exe = '/Users/artur-iuliandaschevici/.nvm/versions/node/v8.4.0/bin/eslint'
+let g:syntastic_javascript_eslint_exe = 'npm run lint -- %f'
+
+" let g:syntastic_error_symbol = '❌'
+" let g:syntastic_style_error_symbol = '⁉️'
+" let g:syntastic_warning_symbol = '!!'
+" let g:syntastic_style_warning_symbol = '💩'
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
+let g:ale_linters = {
+\      'javascript': ['eslint'],
+\      'js': ['eslint'],
+\      'jsx': ['eslint']
+\}
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+" nnoremap \ :Ag<SPACE>
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#ignore_sources = {}
+" let g:deoplete#ignore_sources._ = ["neosnippet"]
+" I want to use my tab more smarter. If we are inside a completion menu jump
+" to the next item. Otherwise check if there is any snippet to expand, if yes
+" expand it. Also if inside a snippet and we need to jump tab jumps. If none
+" of the above matches we just call our usual 'tab'.
+function! s:neosnippet_complete()
+  if pumvisible()
+    return "\<c-n>"
+  else
+    if neosnippet#expandable_or_jumpable()
+      return "\<Plug>(neosnippet_expand_or_jump)"
+    endif
+    return "\<tab>"
+  endif
+endfunction
+
+imap <expr><TAB> <SID>neosnippet_complete()
+
+" "set rtp+=~/.config/nvim/dein/ultisnips/
+" "set rtp+=~/.config/nvim/dein/deoplete.nvim/
+" "set rtp+=~/.config/nvim/mysnips/
+
+" set rtp+=~/.config/nvim/dein/ultisnips/
+" set rtp+=~/.config/nvim/dein/deoplete.nvim/
+set runtimepath+=~/.vim/my-snippets/
+
+" let g:deoplete#enable_at_startup = 1
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories = ['~/.vim/my-snippets', 'my-snippets']
+
+let g:deoplete#enable_at_startup = 1
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory='~/.vim/my-snippets'
+
+inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
+" inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<tab>"
+let g:typescript_indent_disable = 1
+let g:syntastic_go_checkers = ['go']
+
+nmap ]c <Plug>GitGutterNextHunk
+nmap [c <Plug>GitGutterPrevHunk
+nmap <Leader>hs <Plug>GitGutterStageHunk
+nmap <Leader>hu <Plug>GitGutterUndoHunk
+" Convert slashes to backslashes for Windows.
+if has('win32')
+  nmap ,cs :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+  nmap ,cl :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
+
+  " This will copy the path in 8.3 short format, for DOS and Windows 9x
+  nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
+else
+  nmap ,cs :let @*=expand("%")<CR>
+  nmap ,cl :let @*=expand("%:p")<CR>
+endif
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+"End dein Scripts-------------------------
