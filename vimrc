@@ -49,12 +49,12 @@ if dein#load_state('/Users/adaschevici/.config/nvim/dein')
   call dein#add('/Users/adaschevici/.config/nvim/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
-  call dein#add('Shougo/neosnippet.vim')
-  call dein#add('Shougo/neosnippet-snippets')
+  " call dein#add('Shougo/neosnippet.vim')
+  " call dein#add('Shougo/neosnippet-snippets')
 
   call dein#add('scrooloose/nerdtree')
   call dein#add('scrooloose/syntastic')
-  call dein#add('kien/ctrlp.vim')
+  call dein#add('ctrlpvim/ctrlp.vim')
   call dein#add('fatih/vim-go')
   call dein#add('jimenezrick/vimerl')
   call dein#add('nvie/vim-flake8')
@@ -91,6 +91,7 @@ if dein#load_state('/Users/adaschevici/.config/nvim/dein')
 
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('ryanoasis/vim-devicons')
   " Required:
   call dein#end()
   call dein#save_state()
@@ -237,6 +238,7 @@ au FileType scss setl sw=2 sts=2 et
 au FileType js setl sw=2 sts=2 et
 au FileType ts setl sw=2 sts=2 et
 au FileType go setl sw=4 sts=4 et
+au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++14 -stdlib=libc++'
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
@@ -316,10 +318,10 @@ set runtimepath+=~/.vim/my-snippets/
 
 " let g:deoplete#enable_at_startup = 1
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories = ['~/.vim/my-snippets', 'my-snippets']
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" let g:UltiSnipsSnippetDirectories = ['~/.vim/my-snippets', 'my-snippets']
 
 let g:deoplete#enable_at_startup = 1
 let g:neosnippet#enable_snipmate_compatibility = 1
@@ -346,6 +348,7 @@ else
   nmap ,cs :let @*=expand("%")<CR>
   nmap ,cl :let @*=expand("%:p")<CR>
 endif
+let NERDTreeShowHidden=1
 " If you want to install not installed plugins on startup.
 "if dein#check_install()
 "  call dein#install()
