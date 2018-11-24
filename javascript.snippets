@@ -1,0 +1,463 @@
+snippet cl "console.log(...)" b
+console.log($0)
+endsnippet
+
+snippet fun "function with dynamic docblock" b
+`!p
+# Currently Ultisnips does not support dynamic tabstops, so we cannot add
+# tabstops to the datatype for these param tags until that feature is added.
+def formatTag(argument):
+	return " * @param {{}} {0}".format(argument)
+
+arguments = t[2].split(',')
+arguments = [argument.strip() for argument in arguments if argument]
+
+if len(arguments):
+	tags = map(formatTag, arguments)
+	snip.rv = "/**"
+	for tag in tags:
+		snip += tag
+	snip += ' */'
+	snip += ''
+else:
+	snip.rv = ''
+`${1}: function(${2}) {
+	${0:${VISUAL}}
+},
+endsnippet
+
+snippet re "require" b
+const `!p
+def formatVariableName(path):
+	lastPart = path.split('/')[-1]
+	if lastPart == 'underscore':
+		return '_'
+	elif lastPart == 'jquery':
+		return '$'
+	else:
+		return re.sub(r'[_\-]', '', lastPart.title())
+snip.rv = formatVariableName(t[1])
+` = require('${1}')$0
+endsnippet
+
+snippet me "module.exports" b
+module.exports = ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`}$0
+endsnippet
+
+snippet cc "createClass" b
+var ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`} = React.createClass({
+	/**
+	 * @return {Object}
+	 */
+	render: function() {
+		return (
+			$0
+		)
+	}
+})
+
+module.exports = $1
+endsnippet
+
+#
+#  React snippets
+#
+
+snippet cdm "Component did mount" b
+componentDidMount() {
+	${1}
+}$0
+endsnippet
+
+snippet cdup "Component did update" b
+componentDidUpdate(prevProps, prevState) {
+	${1}
+}$0
+endsnippet
+
+snippet cwm "Component will mount" b
+componentWillMount() {
+	${1}
+}$0
+endsnippet
+
+snippet cwr "Component will receive props" b
+componentWillReceiveProps(nextProps) {
+	${1}
+}$0
+endsnippet
+
+snippet cwun "Component will unmount" b
+componentWillUnmount() {
+	${1}
+}$0
+endsnippet
+
+snippet cwu "Component will update" b
+componentWillUpdate(nextProps, nextState) {
+	${1}
+}$0
+endsnippet
+
+snippet fup "Force update"
+forceUpdate(${1:callback})
+endsnippet
+
+snippet gdp "Get default props" b
+getDefaultProps() {
+	return {
+		${1}
+	}
+}$0
+endsnippet
+
+snippet gis "Get initial state" b
+getInitialState() {
+	return {
+		${1}: ${2}
+	}
+}$0
+endsnippet
+
+snippet ism "Is mounted"
+isMounted()
+endsnippet
+
+snippet jsx "Define jsx dom" b
+/**
+ * @jsx React.DOM
+ */
+
+import React from 'react'
+
+let ${2:ClassName} = React.createClass({
+
+render() {
+	return (
+		${VISUAL}$4
+	)
+}
+
+})
+$0
+${3:module.exports = $2}
+endsnippet
+
+snippet pt "propTypes" b
+propTypes: {
+	${1}: React.PropTypes.${2:string}
+}
+endsnippet
+
+snippet rcx "Extends React.Component" b
+class ${1:ClassName} extends React.Component {
+	render(){
+		return (
+			$2
+		)
+	}
+}
+endsnippet
+
+snippet ren "render"
+render() {
+	return (
+		${1:<div />}
+	)
+}$0
+endsnippet
+
+snippet sst "Set state" b
+this.setState({
+	${1}: ${2}
+})$0
+endsnippet
+
+snippet scu "Should component update"
+shouldComponentUpdate(nextProps, nextState) {
+	${1}
+}$0
+endsnippet
+
+snippet props "Get property" i
+this.props.${1}
+endsnippet
+
+snippet state "Get state" i
+this.state.${1}
+endsnippet
+
+snippet trp "Transfer props to"
+this.transferPropsTo(${VISUAL}$0)
+endsnippet
+
+# This snippet will only works if the keyword 'con' is the first word of line
+snippet con "Constructor for React.Component" b
+constructor(props, context) {
+	super(props, context)
+
+	this.state = {
+		$1: $2
+	}
+}$0
+
+endsnippet
+
+# React & JSX
+snippet rrcc "React Redux Class Component" b
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import styles from './${2:$1}.css'
+
+class ${1:`!v expand('%:t:r')`} extends Component {
+	static propTypes = {
+		children: PropTypes.node,
+		className: PropTypes.string,
+		dispatch: PropTypes.func.isRequired,
+	}
+
+	constructor(props) {
+		super(props)
+	}
+
+	render() {
+		return (
+			<div className={styles.base}>
+				$3
+			</div>
+		)
+	}
+}
+
+function mapStateToProps(state) {
+	return {}
+}
+
+export default connect(mapStateToProps)($1)
+endsnippet
+
+snippet rcc "React Class Component" b
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import styles from './${2:$1}.css'
+
+class ${1:`!v expand('%:t:r')`} extends Component {
+	static propTypes = {
+		children: PropTypes.node,
+		className: PropTypes.string,
+	}
+
+	constructor(props) {
+		super(props)
+	}
+
+	render() {
+		return (
+			<div className={styles.base}>
+				$3
+			</div>
+		)
+	}
+}
+
+export default $1
+endsnippet
+
+snippet rfc "React Functional Component" b
+import React from 'react'
+import PropTypes from 'prop-types'
+import styles from './${2:$1}.css'
+
+const ${1:`!v expand('%:t:r')`} = (${3:{...props}}) => {
+	return (
+		<div className={styles.base}>
+			$4
+		</div>
+	)
+}
+
+$1.defaultProps = {}
+
+$1.propTypes = {}
+
+export default $1
+endsnippet
+
+snippet rsc "React Styled Component" b
+import styled from 'styled-components'
+
+const ${1:`!v expand('%:t:r')`} = styled.${2:div}\`
+	$3
+\`
+
+export default $1
+endsnippet
+
+snippet rsci "React Styled Component Interpolation" b
+import styled, { css } from 'styled-components'
+
+const ${1:`!v expand('%:t:r')`} = styled.${2:div}\`${props => css\`
+	${3:${props.$4 && \`
+		$5
+	\`}}
+\`}\`
+
+export default $1
+endsnippet
+
+snippet pp "Get Props"
+${props => props.${1}}
+endsnippet
+
+snippet cn "className"
+className="$1"
+endsnippet
+
+snippet dp "Default Props" b
+${1:`!v expand('%:t:r')`.}defaultProps = {
+	$2
+}
+endsnippet
+
+snippet set "Set State"
+this.setState({
+	${1}: ${2}
+})
+endsnippet
+
+snippet props "Get Property" i
+this.props.${1}
+endsnippet
+
+snippet state "Get State" i
+this.state.${1}
+endsnippet
+
+snippet ref "Ref" i
+ref={${1:ref} => { this.${2:name} = $1 }}
+endsnippet
+
+
+# Component Lifecycle
+snippet cwm "Component Will Mount" b
+componentWillMount() {
+	$1
+}
+endsnippet
+
+snippet cdm "Component Did Mount" b
+componentDidMount() {
+	$1
+}
+endsnippet
+
+snippet cwrp "Component Will Receive Props" b
+componentWillReceiveProps(nextProps) {
+	$1
+}
+endsnippet
+
+snippet scup "Should Component Update" b
+shouldComponentUpdate(nextProps, nextState) {
+	$1
+}
+endsnippet
+
+snippet cwup "Component Will Update" b
+componentWillUpdate(nextProps, nextState) {
+	$1
+}
+endsnippet
+
+snippet cdup "Component Did Update" b
+componentDidUpdate(prevProps, prevState) {
+	$1
+}
+endsnippet
+
+snippet cwu "Component Will Unmount" b
+componentWillUnmount() {
+	$1
+}
+endsnippet
+
+snippet ren "Render"
+render() {
+	return ${1:(
+		${2:<div>${3}</div>}
+	)}
+}
+endsnippet
+
+
+# PropTypes
+snippet pt "PropTypes Definition" b
+${1:`!v expand('%:t:r')`.}propTypes = {
+	${2:className}: ${3:PropTypes.string},
+}
+endsnippet
+
+snippet  pt.a "PropTypes Array" w
+PropTypes.array${1:,}
+endsnippet
+
+snippet   pt.b "PropTypes Boolean" w
+PropTypes.bool${1:,}
+endsnippet
+
+snippet pt.f "PropTypes Function" w
+PropTypes.func${1:,}
+endsnippet
+
+snippet pt.n "PropTypes Number" w
+PropTypes.number${1:,}
+endsnippet
+
+snippet pt.o "PropTypes Object" w
+PropTypes.object${1:,}
+endsnippet
+
+snippet pt.s "PropType String" w
+PropTypes.string${1:,}
+endsnippet
+
+snippet pt.no "PropTypes Node" w
+PropTypes.node${1:,}
+endsnippet
+
+snippet pt.e "PropTypes Element" w
+PropTypes.element${1:,}
+endsnippet
+
+snippet pt.io "PropTypes instanceOf" w
+PropTypes.instanceOf(${2:PropTypes.string})${1:,}
+endsnippet
+
+snippet pt.one "PropTypes oneOf" w
+PropTypes.oneOf(['$2'$3])${1:,}
+endsnippet
+
+snippet pt.onet "PropTypes oneOfType" w
+PropTypes.oneOfType([
+	$2
+])${1:,}
+endsnippet
+
+snippet pt.ao "PropTypes arrayOf" w
+PropTypes.arrayOf(${2:PropTypes.string})${1:,}
+endsnippet
+
+snippet pt.oo "PropTypes objectOf" w
+PropTypes.objectOf(${2:PropTypes.string})${1:,}
+endsnippet
+
+snippet pt.sh "PropTyes Shape" w
+PropTypes.shape({
+	$2
+})${1:,}
+endsnippet
+
+snippet ir "isRequired" w
+isRequired,
+endsnippet
