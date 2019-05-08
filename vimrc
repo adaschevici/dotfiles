@@ -1,4 +1,10 @@
 cnoreabbrev W w
+cnoreabbrev ;w w
+cnoreabbrev :;w w
+cnoreabbrev ::;w w
+cnoreabbrev ::w; w
+cnoreabbrev :w; w
+cnoreabbrev ::w; w
 cnoreabbrev Q q
 cnoreabbrev Qa qa
 cnoreabbrev QA qa
@@ -12,6 +18,7 @@ cnoreabbrev wQ wq
 cnoreabbrev WQ wq
 cnoreabbrev Wqa wqa
 
+let g:NERDTreeWinSize=60
 set noeol
 set tags+=tags;$HOME
 set clipboard=unnamed
@@ -39,6 +46,8 @@ set runtimepath+=/Users/adaschevici/.config/nvim/dein/repos/github.com/Shougo/de
 
 let g:python_host_prog='~/pythons/py2/bin/python'
 " let g:python3_host_prog='~/pythons/py3/bin/python'
+
+set noswapfile
 
 " Required:
 if dein#load_state('/Users/adaschevici/.config/nvim/dein')
@@ -74,6 +83,7 @@ if dein#load_state('/Users/adaschevici/.config/nvim/dein')
   call dein#add('honza/vim-snippets')
   call dein#add('AndrewRadev/linediff.vim')
   call dein#add('leafgarland/typescript-vim')
+  call dein#add('/usr/local/bin/fzf')
   call dein#add('junegunn/fzf.vim')
   call dein#add('racer-rust/vim-racer')
   call dein#add('terryma/vim-multiple-cursors')
@@ -89,6 +99,7 @@ if dein#load_state('/Users/adaschevici/.config/nvim/dein')
     call dein#add('roxma/vim-hug-neovim-rpc')
   endif
 
+  call dein#add('jparise/vim-graphql')
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
   call dein#add('ryanoasis/vim-devicons')
@@ -151,6 +162,7 @@ set history=700                " Sets how many lines of history VIM has to remem
 set nocompatible
 set background=dark
 colo solarized
+
 syntax on
 
 set showmode
@@ -266,11 +278,28 @@ highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
 
+let g:ale_linters = {}
 let g:ale_linters = {
 \      'javascript': ['eslint'],
 \      'js': ['eslint'],
 \      'jsx': ['eslint']
 \}
+let g:ale_linters_explicit = 1
+let g:ale_javascript_prettier_use_local_config = 1
+
+let g:ale_fixers = {}
+let g:ale_fixers = {
+\      'javascript': ['prettier'],
+\      'js': ['prettier'],
+\      'jsx': ['prettier'],
+\      'json': ['prettier'],
+\      'graphql': ['prettier']
+\}
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+let g:ale_fix_on_save = 1
 
 " The Silver Searcher
 if executable('ag')
@@ -349,6 +378,7 @@ else
   nmap ,cl :let @*=expand("%:p")<CR>
 endif
 let NERDTreeShowHidden=1
+set rtp+=/usr/local/opt/fzf
 " If you want to install not installed plugins on startup.
 "if dein#check_install()
 "  call dein#install()
