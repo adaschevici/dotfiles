@@ -1,55 +1,40 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/bin:$HOME/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/zero/.oh-my-zsh
-fpath+=~/.zfunc
+export ZSH="/Users/zero/.oh-my-zsh"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
+bindkey -v
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting zsh-autosuggestions)
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
-DEFAULT_USER=$USER
-prompt_context() {}
-
-export GOPATH="$HOME/golibs"
-export GOROOT="/usr/local/opt/go/libexec"
-export GOPATH="$GOPATH:$HOME/go_scraping/crawlers"
-export GOPATH="$GOPATH:$HOME/go_scraping/demo"
-export GOPATH="$GOPATH:$HOME/go_play/demo"
-export GOPATH="$GOPATH:$HOME/go_play"
-export GOPATH="$GOPATH:$HOME/golang_projects"
-
-export PATH=$PATH:$HOME/golibs/bin
-# We no longer use docker machine but docker native instead
-# export DOCKER_TLS_VERIFY="1"
-# export DOCKER_HOST="tcp://192.168.99.100:2376"
-# export DOCKER_CERT_PATH="/Users/zero/.docker/machine/machines/dev"
-# export DOCKER_MACHINE_NAME="dev"
-# # Run this command to configure your shell:
-# eval "$(docker-machine env gollum)"
-ulimit -n 8096
-
-# Setting PATH for Python 3.4
-# The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export PATH
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -70,16 +55,50 @@ export PATH
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+plugins=(git virtualenv zsh-nvm zsh-autosuggestions zsh-better-npm-completion)
+
+### Golang config
+export GOPATH="${HOME}/.go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+test -d "${GOPATH}" || mkdir "${GOPATH}"
+test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
+
+### Custom functions ####
+
+zsh_wifi_signal(){
+  local output=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I)
+  local airport=$(echo $output | grep 'AirPort' | awk -F': ' '{print $2}')
+
+  if [ "$airport" = "Off" ]; then
+    local color='%F{yellow}'
+    echo -n "%{$color%}Wifi Off"
+  else
+    local ssid=$(echo $output | grep ' SSID' | awk -F': ' '{print $2}')
+    local speed=$(echo $output | grep 'lastTxRate' | awk -F': ' '{print $2}')
+    local color='%F{yellow}'
+
+    [[ $speed -gt 100 ]] && color='%F{green}'
+    [[ $speed -lt 50 ]] && color='%F{red}'
+
+    echo -n "%{$color%}$ssid $speed Mb/s%{%f%}" # removed char not in my PowerLine font 
+  fi
+}
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -91,17 +110,14 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -112,45 +128,57 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-autoload zmv
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# NVM plugin config
+lazynvm() {
+  unset -f nvm node npm
+  export NVM_DIR=~/.nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+}
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+nvm() {
+  lazynvm 
+  nvm $@
+}
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="/Users/zero/.cargo/bin:$PATH"
-export PATH="$HOME/Android/sdk/tools:$PATH"
-export PATH="$HOME/Android/sdk/platform-tools:$PATH"
-export RUST_SRC_PATH="/Users/zero/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# Customise the Powerlevel9k prompts
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-  custom_laptop custom_zero dir vcs newline status
-)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-  command_execution_time load ram ssh background_jobs
-)
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-# Add the custom Medium M icon prompt segment
-POWERLEVEL9K_CUSTOM_LAPTOP="echo -n $'\uf135'"
-POWERLEVEL9K_CUSTOM_LAPTOP_FOREGROUND="white"
-POWERLEVEL9K_CUSTOM_LAPTOP_BACKGROUND="black"
-# Add the custom freeCodeCamp prompt segment
-POWERLEVEL9K_CUSTOM_ZERO="echo -n $'\uFC72' zero"
-POWERLEVEL9K_CUSTOM_ZERO_FOREGROUND="white"
-POWERLEVEL9K_CUSTOM_ZERO_BACKGROUND="cyan"
+node() {
+  lazynvm
+  node $@
+}
 
-DEFAULT_FOREGROUND=006 DEFAULT_BACKGROUND=235
+npm() {
+  lazynvm
+  npm $@
+}
 
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="$DEFAULT_BACKGROUND"
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="$DEFAULT_FOREGROUND"
-POWERLEVEL9K_EXECUTION_TIME_ICON="\uf017"
+function load-nvm () {
+  if [[ $OSTYPE == "darwin"* ]]; then
+    export NVM_DIR=~/.nvm
+    [[ -s $(brew --prefix nvm)/nvm.sh ]] && source $(brew --prefix nvm)/nvm.sh
+  else
+    [[ -s "$HOME/.nvm/nvm.sh" ]] && source "$HOME/.nvm/nvm.sh"
+  fi
+}
 
-# Load Nerd Fonts with Powerlevel9k theme for Zsh
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    if ! type nvm >/dev/null; then
+      load-nvm
+    fi
+    nvm use
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+
+# Configuring zsh-suggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan,bg=bold,underline"
+
+# Powerlevel 9k customizations
 POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv rbenv context dir vcs newline status)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time root_indicator background_jobs custom_wifi_signal battery time)
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL="zsh_wifi_signal"
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_BACKGROUND="orange"
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_FOREGROUND="yellow"
 
-source  ~/powerlevel9k/powerlevel9k.zsh-theme
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
