@@ -1,8 +1,6 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=/usr/local/bin:$HOME/bin:$PATH
+export PATH=/usr/local/bin:$HOME/bin:$HOME/.cargo/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH="/Users/zero/.oh-my-zsh"
 
 bindkey -v
 # Set name of the theme to load --- if set to "random", it will
@@ -11,11 +9,14 @@ bindkey -v
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
+source $HOME/.cargo/env
+fpath+=~/.zfunc
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
 # If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -64,15 +65,29 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# Configuring zsh-suggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan,bg=bold,underline"
+
+# Powerlevel 9k customizations
+POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv rbenv context dir vcs newline status)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time root_indicator background_jobs custom_wifi_signal battery time)
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL="zsh_wifi_signal"
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_BACKGROUND="orange"
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_FOREGROUND="yellow"
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/zero/.oh-my-zsh"
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git virtualenv zsh-nvm zsh-autosuggestions zsh-better-npm-completion)
+plugins=(git pyenv virtualenv zsh-nvm zsh-autosuggestions zsh-better-npm-completion)
 
 ### Golang config
 export GOPATH="${HOME}/.go"
+export GOPATH=$GOPATH:${HOME}/Projects/golly/
+export GOPATH=$GOPATH:${HOME}/Projects/mongo-tools/
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 test -d "${GOPATH}" || mkdir "${GOPATH}"
@@ -167,18 +182,8 @@ load-nvmrc() {
     nvm use
   fi
 }
-
+alias python=python3
 add-zsh-hook chpwd load-nvmrc
 
-# Configuring zsh-suggestions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan,bg=bold,underline"
-
-# Powerlevel 9k customizations
-POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv rbenv context dir vcs newline status)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time root_indicator background_jobs custom_wifi_signal battery time)
-POWERLEVEL9K_CUSTOM_WIFI_SIGNAL="zsh_wifi_signal"
-POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_BACKGROUND="orange"
-POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_FOREGROUND="yellow"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
