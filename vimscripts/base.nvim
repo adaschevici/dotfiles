@@ -9,3 +9,16 @@ cnoreabbrev wQ wq
 cnoreabbrev WQ wq
 cnoreabbrev Wqa wqa
 cnoreabbrev WQA wqa
+
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ` ``<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+inoremap (<CR> (<CR>)<ESC>O
+inoremap (;<CR> (<CR>);<ESC>O
+inoremap [<CR> [<CR>]<ESC>O
+inoremap [;<CR> [<CR>];<ESC>O
