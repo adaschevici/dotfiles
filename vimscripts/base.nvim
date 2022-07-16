@@ -22,3 +22,5 @@ inoremap (<CR> (<CR>)<ESC>O
 inoremap (;<CR> (<CR>);<ESC>O
 inoremap [<CR> [<CR>]<ESC>O
 inoremap [;<CR> [<CR>];<ESC>O
+
+colorscheme nightowl2
