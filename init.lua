@@ -6,7 +6,13 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
-vim_cmd 'source vimscripts/base.nvim'
+
+vim_cmd 'source $HOME/.config/nvim/vimscripts/base.nvim'
+
+-- lua defined base settings
+require('base_settings')
+require('autocmds')
+
 
 return require('packer').startup(function(use)
   -- My plugins here

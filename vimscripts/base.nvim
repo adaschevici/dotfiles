@@ -24,3 +24,6 @@ inoremap [<CR> [<CR>]<ESC>O
 inoremap [;<CR> [<CR>];<ESC>O
 
 colorscheme nightowl2
+
+syntax enable
+syntax on
