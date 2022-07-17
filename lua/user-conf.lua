@@ -14,6 +14,6 @@ M.list = true
 
 -- which list chars to schow
 -- M.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣"
-M.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<"
+M.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣"
 
 return M

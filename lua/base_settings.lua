@@ -5,6 +5,7 @@ local g = vim.g
 local cmd = vim.cmd
 local o, wo, bo = vim.o, vim.wo, vim.bo
 local utils = require('config.utils')
+local settings = require('user-conf')
 
 local opt = utils.opt
 local autocmd = utils.autocmd
@@ -38,6 +39,8 @@ opt('autoindent', true)
 opt('showmode', true)
 opt('hlsearch', true)
 opt('ruler', true)
+opt('list', true)
+opt('listchars', settings.listchars)
 
 -- set buffer and window options
 opt('smartindent', true, buffer)

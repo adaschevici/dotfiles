@@ -1,28 +1,21 @@
 local vim_cmd = vim.cmd
 
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-end
-
 
 vim_cmd 'source $HOME/.config/nvim/vimscripts/base.nvim'
 
+
+require('plugins')
+
 -- lua defined base settings
 require('base_settings')
+
+-- lua define autocmds
 require('autocmds')
 
-
-return require('packer').startup(function(use)
-  -- My plugins here
-  -- use 'foo1/bar1.nvim'
-  -- use 'foo2/bar2.nvim'
-
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
-
+vim_cmd [[ lua require'nvim-tree'.setup {}]]
+-- enable filetypee.lua
+-- This feature is currently opt-in
+-- as it does not yet completely match all of the filetypes covered by filetype.vim
+vim.g.do_filetype_lua = 1
+-- disable filetype.vim
+vim.g.did_load_filetypes = 0
