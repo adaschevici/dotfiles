@@ -88,4 +88,59 @@ packer.startup(function(use)
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
   use({ "SmiteshP/nvim-navic" })
+  use({ "onsails/lspkind-nvim", requires = { "famiu/bufdelete.nvim" } })
+  use({
+    "hrsh7th/nvim-cmp",
+    requires = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "f3fora/cmp-spell",
+      "hrsh7th/cmp-calc",
+      "lukas-reineke/cmp-rg",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+    },
+    config = get_config("cmp"),
+  })
+
+  use({ "rafamadriz/friendly-snippets" })
+  use({
+    "L3MON4D3/LuaSnip",
+    requires = "saadparwaiz1/cmp_luasnip",
+    config = get_config("luasnip"),
+  })
+  use({
+    "sindrets/diffview.nvim",
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+    },
+    config = get_config("diffview"),
+  })
+
+  use({
+    "TimUntersberger/neogit",
+    requires = { "nvim-lua/plenary.nvim" },
+    cmd = "Neogit",
+    config = get_config("neogit"),
+  })
+
+  use({ "f-person/git-blame.nvim", config = get_config("git-blame") })
+
+  use({
+    "lewis6991/gitsigns.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+    config = get_config("gitsigns"),
+  })
+
+  use({ "tpope/vim-fugitive" }) -- yeah this is not lua but one of the best Vim plugins ever
+
+  -- language server
+  use({ "neovim/nvim-lspconfig", config = get_config("lsp") })
+  use({ "RRethy/vim-illuminate", config = get_config("illuminate") })
+  use({ "folke/which-key.nvim", config = get_config("which-key") })
+
 end)

@@ -12,7 +12,8 @@ require('base_settings')
 -- lua define autocmds
 require('autocmds')
 
-vim_cmd [[ lua require'nvim-tree'.setup {}]]
+require'nvim-tree'.setup{}
+require'lspconfig'.pyright.setup{}
 -- enable filetypee.lua
 -- This feature is currently opt-in
 -- as it does not yet completely match all of the filetypes covered by filetype.vim
