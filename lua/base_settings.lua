@@ -16,6 +16,7 @@ local window = { o, wo }
 
 -- skip some remote provider login
 g.loaded_python_provider = 0
+g.python_host_prog = '$HOME/.pyenv/versions/local/bin/python'
 g.python3_host_prog = '$HOME/.pyenv/versions/local/bin/python'
 
 -- set <leader> key

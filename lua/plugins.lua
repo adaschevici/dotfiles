@@ -44,9 +44,18 @@ packer.startup(function(use)
   use({
     "nvim-telescope/telescope.nvim",
     requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
+    setup = get_config("telescope_setup"),
     config = get_config("telescope"),
   })
 
+  use({
+    "nvim-telescope/telescope-frecency.nvim",
+    after='telescope.nvim',
+    config = function()
+      require("telescope").load_extension("frecency")
+    end,
+    requires = 'tami5/sqlite.lua'
+  })
   use({ "jvgrootveld/telescope-zoxide" })
   use({ "crispgm/telescope-heading.nvim" })
   use({ "nvim-telescope/telescope-symbols.nvim" })
@@ -54,13 +63,29 @@ packer.startup(function(use)
   use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
   use({ "nvim-telescope/telescope-packer.nvim" })
   use({ "nvim-telescope/telescope-ui-select.nvim" })
+  use({ "nvim-telescope/telescope-project.nvim" })
 
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    config = get_config("treesitter"),
+    run = ":TSUpdate",
+  })
   use({
     "kyazdani42/nvim-tree.lua",
     requires = {
-        'kyazdani42/nvim-web-devicons', -- optional, for file icons
+      'kyazdani42/nvim-web-devicons', -- optional, for file icons
     },
     tag = 'nightly', -- optional, updated every week. (see issue #1193)
     config = get_config("nvim-tree-setup")
   })
+
+  use({ "ahmedkhalf/project.nvim", config = get_config("project") })
+  use({ "EdenEast/nightfox.nvim", config = get_config("nightfox") })
+  use({
+    "nvim-lualine/lualine.nvim",
+    config = get_config("lualine"),
+    event = "VimEnter",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+  })
+  use({ "SmiteshP/nvim-navic" })
 end)

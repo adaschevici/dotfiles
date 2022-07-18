@@ -11,5 +11,6 @@ autocmd('indent_settings', {
   [[FileType css,scss setl sw=2 sts=2 et]],
   [[FileType js,javascript,ts,typescript,tsx setl sw=2 sts=2 et]],
   [[FileType html setl sw=2 sts=2 et]],
+  [[FileType lua setl sw=2 sts=2 et]],
 }, true)
 

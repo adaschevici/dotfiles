@@ -1,5 +1,6 @@
 cnoreabbrev W w
 cnoreabbrev Q q
+cnoreabbrev Qa qa
 cnoreabbrev WQ wq
 cnoreabbrev wQ wq
 cnoreabbrev WQ wq
@@ -7,6 +8,7 @@ cnoreabbrev Wq wq
 cnoreabbrev WQ wq
 cnoreabbrev wQ wq
 cnoreabbrev WQ wq
+cnoreabbrev WQa wqa
 cnoreabbrev Wqa wqa
 cnoreabbrev WQA wqa
 
@@ -22,8 +24,6 @@ inoremap (<CR> (<CR>)<ESC>O
 inoremap (;<CR> (<CR>);<ESC>O
 inoremap [<CR> [<CR>]<ESC>O
 inoremap [;<CR> [<CR>];<ESC>O
-
-colorscheme nightowl2
 
 syntax enable
 syntax on

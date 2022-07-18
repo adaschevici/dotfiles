@@ -3,6 +3,9 @@ local M = {}
 -- Toggle global status line
 M.global_status_line = true
 
+-- set theme
+M.theme = "nightfox"
+
 -- set numbered lines
 M.number = true
 
