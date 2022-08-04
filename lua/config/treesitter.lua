@@ -1,3 +1,9 @@
+local vim = vim
+local opt = vim.opt
+
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+
 require("nvim-treesitter.configs").setup({
   ensure_installed = {
     "bash",
@@ -56,6 +62,26 @@ require("nvim-treesitter.configs").setup({
         ["ir"] = "@parameter.inner",
         ["ar"] = "@parameter.outer",
       },
+      move = {
+            enable = true,
+            set_jumps = true, 
+            goto_next_start = {
+                [']m'] = '@function.outer',
+                [']]'] = '@class.outer'
+            },
+            goto_next_end = {
+                [']M'] = '@function.outer',
+                [']['] = '@class.outer'
+            },
+            goto_previous_start = {
+                ['[m'] = '@function.outer',
+                ['[['] = '@class.outer'
+            },
+            goto_previous_end = {
+                ['[M'] = '@function.outer',
+                ['[]'] = '@class.outer'
+            }
+        },
     },
   },
   rainbow = {
