@@ -15,6 +15,7 @@ require("nvim-treesitter.configs").setup({
     "html",
     "java",
     "javascript",
+    "typescript",
     "json",
     "kotlin",
     "latex",
@@ -24,6 +25,10 @@ require("nvim-treesitter.configs").setup({
     "python",
     "toml",
     "yaml",
+    "tsx",
+    "html",
+    "css",
+    "toml"
   }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   ignore_install = {}, -- List of parsers to ignore installing
   highlight = {

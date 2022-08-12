@@ -37,6 +37,7 @@ local servers = {
   "texlab",
   "tsserver",
   "yamlls",
+  "rust_analyzer",
 }
 -- Use a loop to conveniently call 'setup' on multiple servers
 for _, lsp in ipairs(servers) do
@@ -156,6 +157,10 @@ for _, lsp in ipairs(servers) do
         completion = true,
         hover = true,
       },
+      typescript = {
+        filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+        cmd = { "tsserver", "--stdio" }
+      }
     },
     flags = { debounce_text_changes = 150 },
   })
