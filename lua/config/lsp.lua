@@ -38,6 +38,7 @@ local servers = {
   "tsserver",
   "yamlls",
   "rust_analyzer",
+  "gopls"
 }
 -- Use a loop to conveniently call 'setup' on multiple servers
 for _, lsp in ipairs(servers) do
