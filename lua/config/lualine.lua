@@ -17,6 +17,8 @@ require("lualine").setup({
     icons_enabled = true,
     disabled_filetypes = {},
     always_divide_middle = false,
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
   },
   sections = {
     lualine_a = { { "b:gitsigns_head", icon = "" }, { "diff", source = diff_source } },
@@ -58,5 +60,5 @@ require("lualine").setup({
     lualine_z = {},
   },
   tabline = {},
-  extensions = { "nvim-tree", "toggleterm", "quickfix", "symbols-outline" },
+  extensions = { "nvim-tree", "toggleterm", "quickfix", "symbols-outline", "fugitive" },
 })

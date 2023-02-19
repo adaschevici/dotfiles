@@ -14,6 +14,11 @@ local map = utils.map
 local buffer = { o, bo }
 local window = { o, wo }
 
+cmd[[
+  highlight RedundantSpaces ctermbg=red guibg=red
+  match RedundantSpaces /\s\+$/
+]]
+
 -- skip some remote provider login
 g.loaded_python_provider = 0
 g.python_host_prog = '$HOME/.pyenv/versions/local/bin/python'

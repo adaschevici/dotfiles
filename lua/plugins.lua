@@ -136,7 +136,10 @@ packer.startup(function(use)
     cmd = "Neogit",
     config = get_config("neogit"),
   })
+  use 'simrat39/rust-tools.nvim'
 
+  -- Debugging
+  use 'mfussenegger/nvim-dap'
   use({ "f-person/git-blame.nvim", config = get_config("git-blame") })
 
   use({

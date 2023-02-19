@@ -27,3 +27,4 @@ inoremap [;<CR> [<CR>];<ESC>O
 
 syntax enable
 syntax on
+set mouse=
