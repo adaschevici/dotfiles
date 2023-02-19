@@ -49,6 +49,7 @@ for _, lsp in ipairs(servers) do
     before_init = function(_, config)
       if lsp == "pyright" then
         config.settings.python.pythonPath = get_python_path(config.root_dir)
+        print("Stupid testing...", config.settings.python.pythonPath)
       end
     end,
     capabilities = capabilities,
