@@ -47,6 +47,10 @@ packer.startup(function(use)
     setup = get_config("telescope_setup"),
     config = get_config("telescope"),
   })
+  use({
+    "folke/trouble.nvim",
+    requires = "nvim-tree/nvim-web-devicons",
+  })
 
   use({
     "nvim-telescope/telescope-frecency.nvim",
